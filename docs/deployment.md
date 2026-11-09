@@ -135,7 +135,13 @@ npm test
 npm run build
 ```
 
-Vercel runs the build automatically. The Next config marks `pg` and `@electric-sql/pglite` as server externals and includes `supabase/migrations/**/*.sql` in the server output trace.
+Vercel runs the build automatically. If a custom Vercel Build Command is configured, use
+`npm run typecheck && npm test && npm run build`. The test configuration removes deployment
+database, Gemini and Supabase variables and runs the PGlite suites in one worker, so CI tests
+cannot contact production services or collide over embedded database files.
+
+The Next config marks `pg` and `@electric-sql/pglite` as server externals and includes
+`supabase/migrations/**/*.sql` in the server output trace.
 
 After the first deploy, verify:
 
