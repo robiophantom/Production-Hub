@@ -1,6 +1,8 @@
 // Tests must remain isolated from developer and deployment environment variables.
 // Individual suites configure their own PGlite data directories and fixtures.
 for (const name of [
+  "VERCEL",
+  "VERCEL_ENV",
   "DATABASE_URL",
   "GEMINI_API_KEY",
   "GEMINI_MODEL",
