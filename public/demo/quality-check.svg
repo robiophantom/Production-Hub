@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Quality check">
+  <rect width="1200" height="800" fill="#f7f9fc"/>
+  <rect x="70" y="600" width="1060" height="140" rx="16" fill="#e8eef7"/>
+  <g fill="#ffffff" stroke="#c8d5e6" stroke-width="4">
+    <rect x="140" y="200" width="920" height="330" rx="20"/>
+  </g>
+  <g fill="#2563eb">
+    <rect x="210" y="270" width="180" height="190" rx="14"/>
+    <rect x="420" y="270" width="180" height="190" rx="14"/>
+    <rect x="630" y="270" width="180" height="190" rx="14"/>
+    <rect x="840" y="270" width="150" height="190" rx="14"/>
+  </g>
+  <g stroke="#dc2626" stroke-width="8" fill="none">
+    <circle cx="356" cy="372" r="52"/>
+    <path d="M320 336l72 72M392 336l-72 72"/>
+  </g>
+  <g fill="#172b4d" font-family="Inter, system-ui, sans-serif">
+    <text x="70" y="110" font-size="36" font-weight="700">Needle-bed fault · stitching</text>
+    <text x="70" y="154" font-size="20" fill="#64748b">B-PO-88213 · attached to Tamil issue report · internal only</text>
+    <text x="70" y="690" font-size="20" fill="#64748b">Fault isolated near needle bed; maintenance team notified.</text>
+  </g>
+</svg>

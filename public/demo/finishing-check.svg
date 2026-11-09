@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Finishing inspection">
+  <rect width="1200" height="800" fill="#f4f8ff"/>
+  <rect x="0" y="620" width="1200" height="180" fill="#e2ecfb"/>
+  <rect x="120" y="150" width="960" height="380" rx="26" fill="#ffffff" stroke="#d5e3f8" stroke-width="4"/>
+  <g fill="#2563eb" opacity="0.9">
+    <rect x="180" y="220" width="120" height="250" rx="60"/>
+    <rect x="330" y="200" width="120" height="270" rx="60"/>
+    <rect x="480" y="235" width="120" height="235" rx="60"/>
+    <rect x="630" y="210" width="120" height="260" rx="60"/>
+    <rect x="780" y="240" width="120" height="230" rx="60"/>
+    <rect x="930" y="220" width="90" height="250" rx="45"/>
+  </g>
+  <g stroke="#16a34a" stroke-width="6" fill="none">
+    <circle cx="300" cy="330" r="46"/>
+    <path d="M278 330l16 18 30-34"/>
+  </g>
+  <g fill="#172b4d" font-family="Inter, system-ui, sans-serif">
+    <text x="120" y="90" font-size="34" font-weight="700">Finishing &amp; final inspection</text>
+    <text x="120" y="132" font-size="20" fill="#64748b">Unit 1 · B-PO-88240 · white pique polo</text>
+    <text x="120" y="720" font-size="20" fill="#64748b">Photograph captured on the factory floor. Buyer visibility requires merchandiser approval.</text>
+  </g>
+</svg>

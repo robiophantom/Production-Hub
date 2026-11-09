@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Stitching floor">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eef4ff"/>
+      <stop offset="1" stop-color="#d8e5fb"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect x="70" y="120" width="1060" height="12" rx="6" fill="#c3d6f5"/>
+  <g fill="#ffffff" stroke="#b6cdec" stroke-width="3">
+    <rect x="110" y="420" width="260" height="130" rx="14"/>
+    <rect x="440" y="420" width="260" height="130" rx="14"/>
+    <rect x="770" y="420" width="260" height="130" rx="14"/>
+    <rect x="110" y="600" width="260" height="110" rx="14"/>
+    <rect x="440" y="600" width="260" height="110" rx="14"/>
+    <rect x="770" y="600" width="260" height="110" rx="14"/>
+  </g>
+  <g fill="#2563eb">
+    <circle cx="240" cy="485" r="42"/>
+    <circle cx="570" cy="485" r="42"/>
+    <circle cx="900" cy="485" r="42"/>
+  </g>
+  <g fill="#172b4d" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="600">
+    <text x="215" y="493">S-01</text>
+    <text x="545" y="493">S-02</text>
+    <text x="875" y="493">S-03</text>
+    <text x="215" y="668">S-04</text>
+    <text x="545" y="668">S-05</text>
+    <text x="875" y="668">S-06</text>
+  </g>
+  <g fill="#64748b" font-family="Inter, system-ui, sans-serif" font-size="20">
+    <text x="110" y="200">UNIT 1 · STITCHING LINE 3 · NAVY TEE</text>
+    <text x="110" y="240">Daily output captured by supervisor · Company A Production Hub</text>
+  </g>
+</svg>
