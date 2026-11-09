@@ -14,7 +14,7 @@ const AI_META: Record<
   suggested: { label: "AI suggested", variant: "purple" },
   accepted: { label: "AI accepted", variant: "success" },
   corrected: { label: "AI corrected", variant: "warning" },
-  unavailable: { label: "AI unavailable", variant: "neutral" },
+  unavailable: { label: "No AI suggestion recorded", variant: "neutral" },
 };
 
 export function IssuesTab({ detail }: { detail: OrderDetail }) {
@@ -112,10 +112,17 @@ export function IssuesTab({ detail }: { detail: OrderDetail }) {
                         ) : null}
 
                         {issue.voice_transcript ? (
-                          <p className="mt-2 flex gap-2 text-[11px] leading-relaxed text-slate-500">
+                          <div className="mt-2 flex gap-2 text-[11px] leading-relaxed text-slate-500">
                             <Mic className="mt-0.5 size-3.5 shrink-0" />
-                            <span>Voice transcript: {issue.voice_transcript}</span>
-                          </p>
+                            <div>
+                              <p>Voice transcript: {issue.voice_transcript}</p>
+                              {issue.voice_translation ? (
+                                <p className="mt-1">
+                                  English translation: {issue.voice_translation}
+                                </p>
+                              ) : null}
+                            </div>
+                          </div>
                         ) : null}
                       </div>
 

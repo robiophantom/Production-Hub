@@ -20,10 +20,9 @@ const schema = z.object({
   CLOUDINARY_CLOUD_NAME: z.string().optional(),
   CLOUDINARY_API_KEY: z.string().optional(),
   CLOUDINARY_API_SECRET: z.string().optional(),
-  OPENAI_API_KEY: z.string().optional(),
-  OPENAI_BASE_URL: z.string().url().optional(),
-  AI_MODEL: z.string().optional(),
-  AI_TRANSCRIPTION_MODEL: z.string().optional(),
+  GEMINI_API_KEY: z.string().optional(),
+  GEMINI_MODEL: z.string().optional(),
+  GEMINI_TRANSCRIPTION_MODEL: z.string().optional(),
   AI_CLASSIFICATION_ENABLED: booleanish,
   AI_VOICE_ENABLED: booleanish,
   MAX_UPLOAD_MB: z.string().optional(),
@@ -49,7 +48,7 @@ function read() {
 
   const aiEnabled =
     raw.AI_CLASSIFICATION_ENABLED ??
-    Boolean(raw.OPENAI_API_KEY && raw.OPENAI_API_KEY.length > 10);
+    Boolean(raw.GEMINI_API_KEY && raw.GEMINI_API_KEY.length > 10);
 
   return {
     appUrl:
@@ -71,13 +70,12 @@ function read() {
       ),
     },
     ai: {
-      apiKey: raw.OPENAI_API_KEY,
-      baseUrl: raw.OPENAI_BASE_URL ?? "https://api.openai.com/v1",
-      model: raw.AI_MODEL ?? "gpt-4o-mini",
-      transcriptionModel: raw.AI_TRANSCRIPTION_MODEL ?? "whisper-1",
+      apiKey: raw.GEMINI_API_KEY,
+      model: raw.GEMINI_MODEL ?? "gemini-2.5-flash",
+      transcriptionModel: raw.GEMINI_TRANSCRIPTION_MODEL ?? raw.GEMINI_MODEL ?? "gemini-2.5-flash",
       classificationEnabled: aiEnabled,
       voiceEnabled: raw.AI_VOICE_ENABLED ?? aiEnabled,
-      enabled: Boolean(raw.OPENAI_API_KEY && raw.OPENAI_API_KEY.length > 10),
+      enabled: Boolean(raw.GEMINI_API_KEY && raw.GEMINI_API_KEY.length > 10),
     },
     maxUploadMb: Number(raw.MAX_UPLOAD_MB ?? 8),
   };

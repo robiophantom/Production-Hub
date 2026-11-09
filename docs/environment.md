@@ -14,7 +14,7 @@ Configuration is read once per server process by `src/lib/env.ts`. Invalid value
 | Variable | Default | Purpose / failure mode |
 | --- | --- | --- |
 | `DATABASE_URL` | unset | Hosted Postgres/Supabase connection string. Unset → embedded PGlite at `.data/pgdata`. On Vercel, unset → startup error. Server-only; never expose with `NEXT_PUBLIC_`. |
-| `SEED_DEMO_DATA` | `true` when no `DATABASE_URL` | Seeds demo data into the embedded database only. Any `DATABASE_URL` ignores it. Accepted truthy values: `1`, `true`, `yes`, `on`. |
+| `SEED_DEMO_DATA` | `true` when no `DATABASE_URL` | Controls demo-data seeding in embedded PGlite and demo-credential visibility on the login page. Hosted databases are never seeded automatically. Accepted truthy values: `1`, `true`, `yes`, `on`. |
 | `PGLITE_DATA_DIR` | `.data/pgdata` | Local/embedded data directory. Also used by tests and the E2E server to isolate databases. Not needed in production. |
 
 ## Authentication
@@ -45,10 +45,9 @@ Without Cloudinary, files go to `.data/uploads` and are served by `/api/files/[f
 
 | Variable | Default | Purpose / failure mode |
 | --- | --- | --- |
-| `OPENAI_API_KEY` | unset | Enables AI when longer than 10 characters. Never exposed to the browser. |
-| `OPENAI_BASE_URL` | `https://api.openai.com/v1` | Must be a valid URL; supports OpenAI-compatible gateways. |
-| `AI_MODEL` | `gpt-4o-mini` | Chat model used for classification. |
-| `AI_TRANSCRIPTION_MODEL` | `whisper-1` | Transcription model. |
+| `GEMINI_API_KEY` | unset | Enables Gemini AI when longer than 10 characters. Never exposed to the browser. |
+| `GEMINI_MODEL` | `gemini-2.5-flash` | Gemini model used for classification. |
+| `GEMINI_TRANSCRIPTION_MODEL` | `gemini-2.5-flash` | Gemini model used for Tamil audio transcription. |
 | `AI_CLASSIFICATION_ENABLED` | inferred from the key | Explicitly disable/enable classification. |
 | `AI_VOICE_ENABLED` | inferred from the key | Explicitly disable/enable transcription. |
 

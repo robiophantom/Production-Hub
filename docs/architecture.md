@@ -20,7 +20,7 @@ PostgreSQL / Supabase
   └  Storage: Cloudinary or .data/uploads
 ```
 
-Optional outbound calls: Supabase Auth, Cloudinary upload API, and an OpenAI-compatible API for Tamil issue classification and audio transcription. Each is optional and falls back locally.
+Optional outbound calls: Supabase Auth, Cloudinary upload API, and Google's Gemini API for Tamil issue classification and audio transcription. Each is optional and falls back locally.
 
 ## Layers
 

@@ -4,7 +4,7 @@ AI is a convenience layer for **issue classification** and **Tamil voice transcr
 
 ## Scope and guarantees
 
-- **Server-side only.** `OPENAI_API_KEY` is read in `src/lib/env.ts` and used by `src/lib/ai/index.ts`. It is not prefixed `NEXT_PUBLIC_` and never reaches the browser bundle.
+- **Server-side only.** `GEMINI_API_KEY` is read in `src/lib/env.ts` and used by `src/lib/ai/index.ts`. It is not prefixed `NEXT_PUBLIC_` and never reaches the browser bundle.
 - **Non-blocking.** Classification and transcription failures are caught and converted to fallback results. A production update is never rejected because AI is down.
 - **Advisory.** The generated category, explanation and severity are suggestions stored in `ai_suggested_category`, `ai_explanation` and `ai_status`. The supervisor or merchandiser can accept or correct the category before/after submission.
 - **Never approves buyer notifications.** Only `confirmAlert` by a Super Admin or Merchandiser creates an approved buyer notification. AI output cannot set alert status or notification status.
@@ -14,10 +14,9 @@ AI is a convenience layer for **issue classification** and **Tamil voice transcr
 
 | Variable | Default | Effect |
 | --- | --- | --- |
-| `OPENAI_API_KEY` | unset | Enables the provider when longer than 10 characters |
-| `OPENAI_BASE_URL` | `https://api.openai.com/v1` | Any OpenAI-compatible endpoint |
-| `AI_MODEL` | `gpt-4o-mini` | Chat model for classification |
-| `AI_TRANSCRIPTION_MODEL` | `whisper-1` | Transcription model |
+| `GEMINI_API_KEY` | unset | Enables Gemini when longer than 10 characters |
+| `GEMINI_MODEL` | `gemini-2.5-flash` | Model for classification |
+| `GEMINI_TRANSCRIPTION_MODEL` | `gemini-2.5-flash` | Model for Tamil transcription |
 | `AI_CLASSIFICATION_ENABLED` | inferred from the key | Explicitly enable/disable classification |
 | `AI_VOICE_ENABLED` | inferred from the key | Explicitly enable/disable transcription |
 
@@ -39,17 +38,18 @@ A keyword matcher understands Tamil and English terms for machine breakdown, lab
 
 Fallback results return `status: "suggested"` when at least one keyword matched and `provider: "heuristic"`; otherwise `status: "unavailable"`. Empty text returns `Other` with `provider: "none"`. The UI labels the suggestion so users know whether it came from the model or the fallback.
 
-## Voice transcription
+## Voice transcription and translation
 
 Endpoint: `POST /api/ai/transcribe` with multipart field `audio`.
 
 - Requires a session with role `unit_supervisor` or `super_admin` (merchandisers cannot record voice notes through this endpoint).
 - Audio types and the 12 MB limit are enforced by the storage helper.
 - The provider is called with `language: "ta"` and a 30-second timeout.
-- On success, returns `{ text, provider: "openai", url, publicId }`.
+- On success, returns the original transcript and an English translation as
+  `{ text, translation, provider: "gemini", url, publicId }`.
 - On failure or disabled AI, returns `{ text: null, provider: "unavailable" }` but still attempts to store the audio. Storage failure is also non-fatal.
 
-The supervisor UI attaches the recording to the issue, shows the transcript when available and tells the user when automatic transcription is unavailable. Text entry remains available in all cases.
+The supervisor UI attaches the recording to the issue, shows both the original transcript and its English translation when available, and tells the user when automatic transcription is unavailable. Text entry remains available in all cases.
 
 ## Data sent to the provider
 
@@ -70,7 +70,7 @@ Warnings are written to the server console only; they are not shown to floor use
 
 ## Testing and verification status
 
-`tests/ai.test.ts` verifies the no-key fallback for Tamil machine, English labour and Tamil fabric text, empty input and transcription unavailability. The live provider integration was **not** exercised because no API key is part of the repository; the OpenAI-compatible HTTP calls are implemented but unverified against a live endpoint.
+`tests/ai.test.ts` verifies the no-key fallback for Tamil machine, English labour and Tamil fabric text, empty input and transcription unavailability. The live Gemini integration was **not** exercised because no API key is part of the repository; the server-side HTTP calls require a configured Gemini key.
 
 ## Related reading
 

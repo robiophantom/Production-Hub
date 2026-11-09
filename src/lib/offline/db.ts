@@ -17,6 +17,7 @@ export interface PendingIssue {
   aiStatus?: "suggested" | "accepted" | "corrected" | "unavailable";
   voiceUrl?: string;
   voiceTranscript?: string;
+  voiceTranslation?: string;
   voiceBlob?: Blob;
   voiceName?: string;
 }

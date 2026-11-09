@@ -46,6 +46,7 @@ describe("embedded database", () => {
       "0001_initial_schema.sql",
       "0002_rls_policies.sql",
       "0003_share_token_scope.sql",
+      "0003_voice_translation.sql",
     ]);
 
     const stitching = await db.one<{ total: number }>(

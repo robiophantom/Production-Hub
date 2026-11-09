@@ -8,6 +8,29 @@ The application is designed for Vercel (Next.js) plus Supabase (Postgres/Auth). 
 - A Vercel project connected to this repository.
 - Node 20+ for local build and maintenance scripts.
 
+## Local development
+
+Install dependencies and start the application:
+
+```powershell
+npm ci
+npm run dev
+```
+
+Open the URL printed by Next.js, normally `http://localhost:3000`.
+
+- With `DATABASE_URL` set in `.env`, the application uses the configured hosted PostgreSQL database.
+- Without `DATABASE_URL`, the application uses embedded PGlite at `.data/pgdata`.
+- `SEED_DEMO_DATA=true` enables demo-account visibility; it does not seed hosted PostgreSQL.
+- On a local PGlite run, migrations and demo data are initialized automatically on first database access.
+
+Check the active database at `http://localhost:3000/api/health`. Stop any older `next dev` or
+`next start` process before starting another local server so that you do not accidentally test
+different database configurations on different ports.
+
+For a local hosted-Postgres run, set `DATABASE_URL` in `.env`, restart the server, and verify that
+the health response reports `"database":"postgres"`. Do not use PGlite as the production database.
+
 ## 1. Database
 
 Create the schema in the hosted database:
@@ -16,9 +39,41 @@ Create the schema in the hosted database:
 DATABASE_URL="postgresql://postgres.<project>:<password>@<host>:5432/postgres" npm run db:migrate
 ```
 
+PowerShell equivalent:
+
+```powershell
+$env:DATABASE_URL = "<Supabase connection string>"
+npm run db:migrate
+```
+
 - Use a **direct/session** connection for migrations if the transaction pooler rejects DDL. The runtime can then use the pooled connection string.
 - Migrations create all 20 tables, constraints, indexes, RLS policies, helper functions and the default settings. Applied files are recorded in `public._migrations`, so the command is idempotent.
 - The local bootstrap (`auth.users` shim, `auth.uid()`) is **not** applied to hosted Postgres; Supabase provides those.
+- `SEED_DEMO_DATA=true` does not seed hosted databases. It only enables login-page demo credentials when matching active profiles with password hashes already exist.
+
+To transfer the current local PGlite dataset (including bcrypt demo credentials and all
+relationships), use the explicit insert-only migration command from a machine that has
+the local `.data/pgdata` directory:
+
+```bash
+DEMO_MIGRATION_CONFIRM=YES \
+DATABASE_URL="postgresql://..." \
+npm run db:migrate-demo
+```
+
+PowerShell equivalent:
+
+```powershell
+$env:DEMO_MIGRATION_CONFIRM = "YES"
+$env:DATABASE_URL = "<Supabase connection string>"
+npm run db:migrate-demo
+```
+
+Set `PGLITE_DATA_DIR` when the local database is elsewhere. The command refuses to run
+without the confirmation flag, runs hosted migrations first, inserts rows in foreign-key
+order, skips conflicts, and never updates or deletes existing destination rows. Keep
+`password_hash` authentication enabled for the migrated demo accounts, or create
+matching Supabase Auth users before choosing Supabase Auth as the only credential source.
 
 ## 2. Supabase Auth (optional but recommended)
 
@@ -64,7 +119,8 @@ Set these in **Project → Settings → Environment Variables** for Production a
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | If using Supabase Auth | Public publishable/anon key |
 | `SUPABASE_SECRET_KEY` | If using Supabase Auth + bootstrap | Server-only service role |
 | `CLOUDINARY_CLOUD_NAME` / `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET` | Recommended | Durable photo storage |
-| `OPENAI_API_KEY` | Optional | Enables AI classification/transcription |
+| `GEMINI_API_KEY` | Optional | Server-only Gemini API key for classification/transcription |
+| `GEMINI_MODEL` / `GEMINI_TRANSCRIPTION_MODEL` | Optional | Defaults to `gemini-2.5-flash` |
 | `AI_CLASSIFICATION_ENABLED` / `AI_VOICE_ENABLED` | Optional | Explicit feature switches |
 | `MAX_UPLOAD_MB` | Optional | Image limit, default 8 |
 

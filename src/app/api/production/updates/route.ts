@@ -23,6 +23,7 @@ const issueSchema = z.object({
   aiStatus: z.enum(["suggested", "accepted", "corrected", "unavailable"]).optional(),
   voiceUrl: z.string().max(2000).optional(),
   voiceTranscript: z.string().trim().max(2000).optional(),
+  voiceTranslation: z.string().trim().max(2000).optional(),
 });
 
 const schema = z.object({

@@ -90,7 +90,7 @@ Merchandisers receive only their orders; Super Admin and MD receive the full boo
 ## Security operations
 
 - Rotate `AUTH_SECRET` to invalidate all sessions after a suspected compromise.
-- Rotate Supabase/Cloudinary/OpenAI keys in their dashboards and in Vercel together.
+- Rotate Supabase/Cloudinary/Gemini keys in their dashboards and in Vercel together.
 - Review `/admin/activity` for unexpected role changes, share links or date changes.
 - Revoke share links that are no longer needed; expiry alone is not a substitute for revocation.
 - Do not paste secrets into logs, tickets or chat.

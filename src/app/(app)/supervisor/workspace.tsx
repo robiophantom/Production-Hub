@@ -250,6 +250,7 @@ export function SupervisorWorkspace({
   const [voiceBlob, setVoiceBlob] = useState<Blob | null>(null);
   const [voiceName, setVoiceName] = useState("voice-note.webm");
   const [voiceTranscript, setVoiceTranscript] = useState("");
+  const [voiceTranslation, setVoiceTranslation] = useState("");
   const [voiceHint, setVoiceHint] = useState("");
   const [recording, setRecording] = useState(false);
   const [transcribing, setTranscribing] = useState(false);
@@ -309,6 +310,7 @@ export function SupervisorWorkspace({
     setVoiceBlob(null);
     setVoiceName("voice-note.webm");
     setVoiceTranscript("");
+    setVoiceTranslation("");
     setVoiceHint("");
     setError("");
     if (fileInputRef.current) fileInputRef.current.value = "";
@@ -399,10 +401,17 @@ export function SupervisorWorkspace({
       body.set("audio", blob, voiceName);
       const response = await fetch("/api/ai/transcribe", { method: "POST", body });
       if (!response.ok) throw new Error("transcription failed");
-      const result = (await response.json()) as { text: string | null };
+      const result = (await response.json()) as {
+        text: string | null;
+        translation: string | null;
+      };
       if (result.text) {
         setVoiceTranscript(result.text);
         setIssueTamil((current) => current || result.text || "");
+        if (result.translation) {
+          setVoiceTranslation(result.translation);
+          setIssueEnglish((current) => current || result.translation || "");
+        }
       } else {
         setVoiceHint(copy.voiceNoText);
       }
@@ -460,6 +469,7 @@ export function SupervisorWorkspace({
             aiExplanation: aiExplanation || undefined,
             aiStatus: aiStatus ?? "unavailable",
             voiceTranscript: voiceTranscript || undefined,
+            voiceTranslation: voiceTranslation || undefined,
             voiceBlob: voiceBlob ?? undefined,
             voiceName,
           }
@@ -875,6 +885,12 @@ export function SupervisorWorkspace({
                         {copy.voice}
                       </p>
                       {voiceTranscript}
+                      {voiceTranslation ? (
+                        <p className="mt-2 border-t border-line pt-2">
+                          <span className="font-semibold text-slate-400">English translation: </span>
+                          {voiceTranslation}
+                        </p>
+                      ) : null}
                     </div>
                   ) : voiceBlob ? (
                     <Badge variant="purple">

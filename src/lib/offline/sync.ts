@@ -61,12 +61,14 @@ export async function sendUpdate(
     if (voiceResponse.ok) {
       const voice = (await voiceResponse.json()) as {
         text: string | null;
+        translation: string | null;
         url: string | null;
       };
       issue = {
         ...issue,
         voiceUrl: issue.voiceUrl ?? voice.url ?? undefined,
         voiceTranscript: issue.voiceTranscript ?? voice.text ?? undefined,
+        voiceTranslation: issue.voiceTranslation ?? voice.translation ?? undefined,
       };
     }
   }
@@ -93,6 +95,7 @@ export async function sendUpdate(
             aiStatus: issue.aiStatus,
             voiceUrl: issue.voiceUrl,
             voiceTranscript: issue.voiceTranscript,
+            voiceTranslation: issue.voiceTranslation,
           }
         : undefined,
       photos,

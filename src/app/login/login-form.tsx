@@ -19,9 +19,11 @@ const initialState: LoginState = {};
 export function LoginForm({
   next,
   demoAccounts,
+  demoAccountsAreHosted,
 }: {
   next?: string;
   demoAccounts: DemoLogin[];
+  demoAccountsAreHosted: boolean;
 }) {
   const [state, formAction] = useActionState(loginAction, initialState);
   const [email, setEmail] = useState("");
@@ -92,7 +94,9 @@ export function LoginForm({
             Development demo accounts
           </p>
           <p className="mt-1 text-xs leading-relaxed text-muted">
-            These accounts exist only in the local embedded demo database.
+            {demoAccountsAreHosted
+              ? "These demo accounts are available in the configured hosted database."
+              : "These accounts are available in the local embedded demo database."}
           </p>
           <div className="mt-3 grid gap-2">
             {demoAccounts.map((account) => (

@@ -69,7 +69,7 @@ These predictable accounts are **never** seeded into a hosted database. Any `DAT
 | Authorisation | Role checks in services plus PostgreSQL RLS and column grants |
 | Auth | Supabase Auth when configured, otherwise bcrypt + HS256 session cookie |
 | Storage | Cloudinary when configured, otherwise `.data/uploads` |
-| AI (optional) | OpenAI-compatible chat and transcription APIs, server-side only |
+| AI (optional) | Google Gemini classification and transcription, server-side only |
 | Reports | ExcelJS, pdf-lib |
 | Charts | Recharts |
 | Tests | Vitest (unit/integration/security) and Playwright (E2E) |
@@ -104,9 +104,9 @@ AUTH_SECRET=<long random string>     # required for session cookies
 NEXT_PUBLIC_APP_URL=https://...      # used in share links
 ```
 
-Optional integrations: Supabase Auth (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`), Cloudinary and an OpenAI-compatible AI endpoint. Every optional feature degrades gracefully — see [docs/environment.md](docs/environment.md).
+Optional integrations: Supabase Auth (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`), Cloudinary and Google Gemini. Every optional feature degrades gracefully — see [docs/environment.md](docs/environment.md).
 
-> Never expose `DATABASE_URL`, `SUPABASE_SECRET_KEY`/`SUPABASE_SERVICE_ROLE_KEY`, Cloudinary secrets or `OPENAI_API_KEY` to the browser. Only variables prefixed `NEXT_PUBLIC_` are public.
+> Never expose `DATABASE_URL`, `SUPABASE_SECRET_KEY`/`SUPABASE_SERVICE_ROLE_KEY`, Cloudinary secrets or `GEMINI_API_KEY` to the browser. Only variables prefixed `NEXT_PUBLIC_` are public.
 
 ---
 

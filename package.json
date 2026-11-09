@@ -13,6 +13,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "db:seed": "tsx scripts/seed.ts",
+    "db:migrate-demo": "tsx scripts/migrate-demo.ts",
     "db:reset": "tsx scripts/seed.ts --reset",
     "db:migrate": "tsx scripts/migrate.ts",
     "admin:bootstrap": "tsx scripts/bootstrap-admin.ts"

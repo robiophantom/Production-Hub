@@ -22,7 +22,7 @@ Only one process can open `.data/pgdata`. Close dev servers, test runs and stray
 
 ### Environment validation error mentioning a URL
 
-Optional URL variables such as `NEXT_PUBLIC_APP_URL` or `NEXT_PUBLIC_SUPABASE_URL` reject empty strings. In `.env.local`, either set a complete valid URL or comment the line out. The same applies to `OPENAI_BASE_URL`.
+Optional URL variables such as `NEXT_PUBLIC_APP_URL` or `NEXT_PUBLIC_SUPABASE_URL` reject empty strings. In `.env.local`, either set a complete valid URL or comment the line out.
 
 ## Authentication and sessions
 
@@ -75,7 +75,7 @@ HEIC/HEIF are accepted by the type list, but some browsers report a different MI
 
 ### Audio uploads but no transcript
 
-Expected without `OPENAI_API_KEY`/`AI_VOICE_ENABLED`. The voice note is still stored/linked and the issue can be submitted. Typed text remains the fallback.
+Expected without `GEMINI_API_KEY`/`AI_VOICE_ENABLED`. The voice note is still stored/linked and the issue can be submitted. Typed text remains the fallback.
 
 ## Buyer portal and sharing
 

@@ -179,6 +179,7 @@ export interface ProductionIssue {
   ai_status: "suggested" | "accepted" | "corrected" | "unavailable";
   voice_url: string | null;
   voice_transcript: string | null;
+  voice_translation: string | null;
   severity: IssueSeverity;
   status: IssueStatus;
   reported_by: string;

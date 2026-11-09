@@ -5,6 +5,7 @@ import { Logo } from "@/components/brand/logo";
 import { getSessionUser, roleHome } from "@/lib/auth/session";
 import { BUYER_DEMO_ACCOUNT_C, DEMO_ACCOUNTS } from "@/lib/constants";
 import { env } from "@/lib/env";
+import { getDb } from "@/lib/db";
 import { LoginForm, type DemoLogin } from "./login-form";
 
 export const metadata: Metadata = {
@@ -40,15 +41,25 @@ export default async function LoginPage({
 
   const { next } = await searchParams;
   const config = env();
-  const showDemo =
-    process.env.NODE_ENV !== "production" && config.seedDemoData && !config.databaseUrl;
+  const allDemoAccounts: DemoLogin[] = [
+    ...DEMO_ACCOUNTS,
+    { role: "buyer" as const, ...BUYER_DEMO_ACCOUNT_C },
+  ];
+  let demoAccounts: DemoLogin[] = [];
 
-  const demoAccounts: DemoLogin[] = showDemo
-    ? [
-        ...DEMO_ACCOUNTS,
-        { role: "buyer" as const, ...BUYER_DEMO_ACCOUNT_C },
-      ]
-    : [];
+  if (config.seedDemoData) {
+    const db = await getDb();
+    const available = await db.query<{ email: string }>(
+      `select lower(email) as email
+         from profiles
+        where lower(email) = any($1::text[])
+          and is_active = true
+          and password_hash is not null`,
+      [allDemoAccounts.map((account) => account.email)],
+    );
+    const availableEmails = new Set(available.map((account) => account.email));
+    demoAccounts = allDemoAccounts.filter((account) => availableEmails.has(account.email));
+  }
 
   return (
     <main className="grid min-h-dvh bg-page lg:grid-cols-[1.05fr_0.95fr]">
@@ -103,7 +114,11 @@ export default async function LoginPage({
               Sign in with your Company A account to continue.
             </p>
             <div className="mt-6">
-              <LoginForm next={next} demoAccounts={demoAccounts} />
+              <LoginForm
+                next={next}
+                demoAccounts={demoAccounts}
+                demoAccountsAreHosted={Boolean(config.databaseUrl)}
+              />
             </div>
           </div>
 

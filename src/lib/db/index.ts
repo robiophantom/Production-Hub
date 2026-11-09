@@ -27,15 +27,15 @@ function normalizeSql(sql: string): string {
   return sql.trim();
 }
 
-async function createEmbedded(): Promise<Database> {
+export async function createEmbedded(dataDir = process.env.PGLITE_DATA_DIR): Promise<Database> {
   const { PGlite } = await import("@electric-sql/pglite");
   const { runMigrations } = await import("./migrate");
 
-  const dataDir =
-    process.env.PGLITE_DATA_DIR ?? path.join(process.cwd(), ".data", "pgdata");
-  await fs.mkdir(path.dirname(dataDir), { recursive: true });
+  const resolvedDataDir =
+    dataDir ?? path.join(process.cwd(), ".data", "pgdata");
+  await fs.mkdir(path.dirname(resolvedDataDir), { recursive: true });
 
-  const client = await PGlite.create({ dataDir });
+  const client = await PGlite.create({ dataDir: resolvedDataDir });
 
   const run = async <T>(sql: string, params: unknown[] = [], tx?: typeof client) => {
     const target = tx ?? client;

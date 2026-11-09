@@ -125,6 +125,7 @@ export interface IssueInput {
   aiStatus?: "suggested" | "accepted" | "corrected" | "unavailable";
   voiceUrl?: string;
   voiceTranscript?: string;
+  voiceTranslation?: string;
 }
 
 export interface SubmitUpdateInput {
@@ -256,8 +257,8 @@ export async function submitProductionUpdate(
         `insert into production_issues
           (po_id, milestone_id, update_id, description_tamil, description_english, category,
            ai_suggested_category, ai_explanation, ai_status, voice_url, voice_transcript,
-           severity, reported_by)
-         values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+           voice_translation, severity, reported_by)
+         values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
          returning id`,
         [
           input.poId,
@@ -271,6 +272,7 @@ export async function submitProductionUpdate(
           input.issue.aiStatus ?? "unavailable",
           input.issue.voiceUrl ?? null,
           input.issue.voiceTranscript ?? null,
+          input.issue.voiceTranslation ?? null,
           input.issue.severity,
           user.id,
         ],

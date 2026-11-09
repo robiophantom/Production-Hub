@@ -71,6 +71,11 @@ export default async function SupervisorIssuesPage() {
                     {item.style_name}
                     {item.stage_name ? ` · ${item.stage_name}` : ""}
                   </p>
+                  {item.issue.voice_translation ? (
+                    <p className="mt-1">
+                      English translation: {item.issue.voice_translation}
+                    </p>
+                  ) : null}
                 </div>
                 <Badge variant="default">{item.issue.category}</Badge>
               </div>

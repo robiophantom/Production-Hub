@@ -39,6 +39,7 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     text: transcript.text,
+    translation: transcript.translation,
     provider: transcript.provider,
     url,
     publicId,
